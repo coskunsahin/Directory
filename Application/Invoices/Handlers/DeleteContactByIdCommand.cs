@@ -19,7 +19,7 @@ namespace Application.Invoices.Handlers
             }
             public async Task<int> Handle(DeleteContactByIdCommand command, CancellationToken cancellationToken)
             {
-                var Contact = await _context.Contacts.Where(a => a.People.Id == command.Id).Include(a => a.People).FirstOrDefaultAsync();
+                var Contact = await _context.Contacts.Where(a => a.People.PeopleID == command.Id).Include(a => a.People).FirstOrDefaultAsync();
                 if (Contact == null) return default;
                 _context.Contacts.Remove(Contact);
                 await _context.SaveChangesAsync(cancellationToken);

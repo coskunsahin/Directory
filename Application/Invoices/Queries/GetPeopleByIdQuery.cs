@@ -20,7 +20,7 @@ namespace Application.Invoices.Queries
             }
             public async Task<People> Handle(GetPeoplesByIdQuery query, CancellationToken cancellationToken)
             {
-                var People = _context.Peoples.Where(a => a.Id == query.Id).FirstOrDefault();
+                var People =  _context.Peoples.Where(a => a.PeopleID== query.Id).FirstOrDefault();
                 if (People == null) return null;
                 return People;
             }

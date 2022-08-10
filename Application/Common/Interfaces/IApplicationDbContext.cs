@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,7 +12,9 @@ namespace Application.Common.Interfaces
         DbSet<People> Peoples { get; set; }
 
         DbSet<Contact> Contacts { get; set; }
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 
+   
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+       //IEnumerable<object> Set<T>();
     }
 }

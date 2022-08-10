@@ -14,30 +14,30 @@ using System.Threading.Tasks;
 
 namespace Application.Invoices.Handlers
 {
-    public class GetSistemQueryHandler : IRequestHandler<GetSistemQuery, IList<PeopleVM>>
+    public class GetSistem : IRequestHandler<GetSisMess, IList<PeopleVM>>
     {
-      
+
 
         private readonly IApplicationDbContext _context;
-        
 
-        public GetSistemQueryHandler(IApplicationDbContext context)
+
+        public GetSistem(IApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<IList<PeopleVM>> Handle(GetSistemQuery request, CancellationToken cancellationToken)
+        public async Task<IList<PeopleVM>> Handle(GetSisMess request, CancellationToken cancellationToken)
         {
 
 
             var peoplet = await _context.Peoples.Include(i => i.Contacts)
-                .Where(i => i.CreatedBy == request.User).ToListAsync();
+               .ToListAsync();
             //  var tr=_context.Contacts.Where(a => a.Location == request.lon).FirstOrDefault();
-            var vm = peoplet.Select(i => new PeopleVM
+            var vm = peoplet.Select(i => new PeopleVM 
             {
 
-                Name=i.Name,
-
+                Name = i.Name,
+                
                 LastName = i.LastName,
                 Company = i.Company,
                 Contacts = i.Contacts.Select(k => new ContactVM

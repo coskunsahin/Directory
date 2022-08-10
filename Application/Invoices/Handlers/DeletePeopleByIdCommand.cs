@@ -19,11 +19,11 @@ namespace Application.Invoices.Handlers
             }
             public async Task<int> Handle(DeletePeopleByIdCommand command, CancellationToken cancellationToken)
             {
-                var People = await _context.Peoples.Where(a => a.Id == command.Id).FirstOrDefaultAsync();
+                var People = await _context.Peoples.Where(a => a.PeopleID == command.Id).FirstOrDefaultAsync();
                 if (People == null) return default;
                 _context.Peoples.Remove(People);
                 await _context.SaveChangesAsync(cancellationToken);
-                return People.Id;
+                return People.PeopleID;
             }
         }
     }

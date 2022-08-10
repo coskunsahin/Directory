@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Api.Controllers
@@ -17,10 +18,10 @@ namespace Api.Controllers
 
         private IMediator _mediator;
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
-        [HttpGet("{lo}")]
-        public async Task<IActionResult> Getlocal(double lo)
+        [HttpGet("{lon}")]
+        public async Task<IActionResult> GetLocal(long lon)
         {
-            return Ok(await Mediator.Send(new GetLocalQuery { lo = lo }));
+            return Ok(await Mediator.Send(new GetSistemQuery{ lon = lon }));
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> ContactDelete(int id)
@@ -36,14 +37,10 @@ namespace Api.Controllers
         {
             return await Mediator.Send(new GetAnaQuery());
         }
+
+
        
-
-        //[HttpGet]
-        //public async Task<IList<PeopleVM>> GetSistem()
-        //{
-        //    return await Mediator.Send(new GetSistemQuery());
-        //}
-
+        
     }
 
 

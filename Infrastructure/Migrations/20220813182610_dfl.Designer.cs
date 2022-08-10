@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220806100834_AddDirectory")]
-    partial class AddDirectory
+    [Migration("20220813182610_dfl")]
+    partial class dfl
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,10 +49,10 @@ namespace Infrastructure.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
-                    b.Property<double?>("Location")
-                        .HasColumnType("double precision");
+                    b.Property<long>("Location")
+                        .HasColumnType("bigint");
 
-                    b.Property<int?>("PeopleId")
+                    b.Property<int>("PeopleID")
                         .HasColumnType("integer");
 
                     b.Property<int>("Phone")
@@ -63,14 +63,14 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PeopleId");
+                    b.HasIndex("PeopleID");
 
                     b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("Domain.Entities.People", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PeopleID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -99,10 +99,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("ReportTime")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<Guid?>("uuid")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
+                    b.HasKey("PeopleID");
 
                     b.ToTable("Peoples");
                 });
@@ -391,7 +388,9 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Domain.Entities.People", "People")
                         .WithMany("Contacts")
-                        .HasForeignKey("PeopleId");
+                        .HasForeignKey("PeopleID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

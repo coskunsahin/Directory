@@ -10,6 +10,8 @@ namespace Application.Invoices.Queries
 {
     public class GetSistemQuery : IRequest<IList<PeopleVM>>
     {
-        public string User { get; set; } 
+        public string User { get; set; }
+
+        public long lon { get; set; }
     }
 }

@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using System;
 
 namespace Infrastructure.Migrations
 {
-    public partial class AddDirectory : Migration
+    public partial class dfl : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,13 +68,12 @@ namespace Infrastructure.Migrations
                 name: "Peoples",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    PeopleID = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedBy = table.Column<string>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
                     LastModifiedBy = table.Column<string>(nullable: true),
                     LastModified = table.Column<DateTime>(nullable: true),
-                    uuid = table.Column<Guid>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     Company = table.Column<string>(nullable: true),
@@ -82,7 +81,7 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Peoples", x => x.Id);
+                    table.PrimaryKey("PK_Peoples", x => x.PeopleID);
                 });
 
             migrationBuilder.CreateTable(
@@ -219,22 +218,22 @@ namespace Infrastructure.Migrations
                     LastModifiedBy = table.Column<string>(nullable: true),
                     LastModified = table.Column<DateTime>(nullable: true),
                     Uuid = table.Column<Guid>(nullable: false),
+                    PeopleID = table.Column<int>(nullable: false),
                     Phone = table.Column<int>(nullable: false),
                     Email = table.Column<string>(nullable: true),
                     Addrees = table.Column<string>(nullable: true),
-                    Location = table.Column<double>(nullable: true),
-                    Info = table.Column<string>(nullable: true),
-                    PeopleId = table.Column<int>(nullable: true)
+                    Location = table.Column<long>(nullable: false),
+                    Info = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Contacts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Contacts_Peoples_PeopleId",
-                        column: x => x.PeopleId,
+                        name: "FK_Contacts_Peoples_PeopleID",
+                        column: x => x.PeopleID,
                         principalTable: "Peoples",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "PeopleID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -275,9 +274,9 @@ namespace Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contacts_PeopleId",
+                name: "IX_Contacts_PeopleID",
                 table: "Contacts",
-                column: "PeopleId");
+                column: "PeopleID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DeviceCodes_DeviceCode",

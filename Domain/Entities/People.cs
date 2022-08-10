@@ -1,6 +1,8 @@
 ﻿using Domain.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,14 +11,14 @@ namespace Domain.Entities
 {
     public class People:AuditEntity
     {
+
+        //[Table(Contact)]
         public People()
         {
             this.Contacts = new List<Contact>();
         }
-
-        public int Id { get; set; }
-        public Guid? uuid { get; set; }
-
+        [Key]
+        public int PeopleID { get; set; }
         public string Name { get; set; }
 
         public string LastName { get; set; }

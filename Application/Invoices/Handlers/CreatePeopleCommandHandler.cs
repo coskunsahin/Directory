@@ -2,6 +2,7 @@
 using Application.Invoices.Commands;
 using Domain.Entities;
 using MediatR;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,11 +22,13 @@ namespace Application.Invoices.Handlers
             var entity = new People
             {
                 LastName = request.LastName,
+              
                 Name = request.Name,
                 Company = request.Company,
                 ReportTime = request.ReportTime,
                 Contacts = request.Contacts.Select(i => new Contact
                 {
+                    Uuid = Guid.NewGuid(),
                     Phone = i.Phone,
                     Addrees = i.Addrees,
                     Email = i.Email,
@@ -35,7 +38,7 @@ namespace Application.Invoices.Handlers
             };
             _context.Peoples.Add(entity);
             await _context.SaveChangesAsync(cancellationToken);
-            return entity.Id;
+            return entity.PeopleID;
         }
     }
 }

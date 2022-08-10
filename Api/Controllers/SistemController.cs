@@ -1,4 +1,5 @@
-﻿using Application.Invoices.Queries;
+﻿using Application.Invoices.Handlers;
+using Application.Invoices.Queries;
 using Application.Invoices.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -18,18 +19,22 @@ namespace Api.Controllers
     public class SistemController : ControllerBase
     {
         private IMediator _mediator;
+        private long lon;
+
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
-
-
-        [HttpPost]
-        public async Task<IList<PeopleVM>> GetSistem()
+        [HttpGet("{lon}")]
+        public async Task<IActionResult> GetById(long lon)
         {
-
-           
-
-                return await Mediator.Send(new GetSistemQuery());
-            }
-
+            return Ok(await Mediator.Send(new GetSistemQuery { lon = lon }));
         }
+        //[HttpGet]
+        //public async Task<IActionResult> GetAll()
+        //{
+        //    return Ok(await Mediator.Send(new GetSistemMessage()));
+        //}
+
+   
     }
+}
+
 

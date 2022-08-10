@@ -8,11 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Common.Interfaces;
+
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Client;
 using Newtonsoft.Json;
+using System.Runtime.Remoting.Contexts;
 
 namespace Application.Invoices.Handlers
 {
@@ -33,10 +34,11 @@ namespace Application.Invoices.Handlers
             var vm = peoplet.Select(i => new PeopleVM
             {
 
-                Id = i.Id,
+                PeopleID = i.PeopleID,
                 Name = i.Name,
                 LastName = i.Name,
-                Company = i.Company,
+                Company = i.Name,
+               
                 Contacts = i.Contacts.Select(k => new ContactVM
                 {
                     Phone = k.Phone,
@@ -51,14 +53,16 @@ namespace Application.Invoices.Handlers
 
             }
             ).ToList();
-        
 
-                return vm;
-            }
+
+            return vm;
         }
+
+
 
 
 
 
     }
 
+}
